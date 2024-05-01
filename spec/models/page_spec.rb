@@ -1,0 +1,42 @@
+require "rails_helper"
+
+RSpec.describe Page, type: :model do
+  subject { build(:page) }
+
+  it "has a valid factory" do
+    expect(subject).to be_valid
+  end
+
+  describe "validations" do
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to validate_presence_of(:title) }
+    it { is_expected.to validate_presence_of(:content) }
+  end
+
+  describe "#slug" do
+    let!(:page) { create(:page, title: "--Foo Bar! _ 87 --") }
+
+    it "is generated from the title" do
+      expect(page.slug).to eq("foo-bar-87")
+    end
+
+    it "generate a unique slug" do
+      new_page = build(:page, title: "title one")
+      new_page.slug = page.slug
+      new_page.valid?
+      expect(new_page.errors[:slug]).to include("has already been taken")
+    end
+
+    it "validates uniqueness of title" do
+      new_page = build(:page, title: page.title)
+      expect(new_page.title).to eq(page.title)
+      expect(new_page).to_not be_valid
+    end
+
+    it "is generate different slug from a title that will generate same slug" do
+      new_page = build(:page, title: "--Foo Bar! _ 87 -- ")
+      expect(new_page).to be_valid
+      expect(new_page.slug).to_not eq(page.slug)
+    end
+  end
+end
