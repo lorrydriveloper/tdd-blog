@@ -4,7 +4,7 @@ RSpec.describe "Home" do
   it "renders homepage" do
     create(:page, :published, title: "My Blog")
     visit root_path
-    within "header" do
+    within "header:not(article header)" do
       expect(page).to have_content("My Blog")
     end
     articles = find_all("article")
