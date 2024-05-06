@@ -33,6 +33,22 @@ RSpec.describe Page, type: :model do
         expect(Page.ordered).to eq([page2, page1])
       end
     end
+
+    describe ".by_term" do
+      let(:page) { create(:page, content: "foo") }
+      let(:page1) { create(:page, content: "foo bar") }
+      let(:page2) { create(:page, content: "foo bar baz") }
+      before { [page, page1] }
+      it "should return pages for the given term" do
+        expected = [page, page1, page2]
+        expect(Page.by_term("foo")).to eq(expected)
+      end
+      it "should return pages for multiple terms" do
+        expected = [page2]
+
+        expect(Page.by_term("foo bar baz")).to eq(expected)
+      end
+    end
   end
 
   describe "validations" do

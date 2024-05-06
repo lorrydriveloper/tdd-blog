@@ -8,6 +8,11 @@ class Page < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :ordered, -> { order(created_at: :desc) }
+  scope :by_term, ->(term) do
+    term.gsub!(/[^-\w] /, "")
+    terms = term.split(" ")
+    where(terms.map { |t| "content ILIKE ?" }.join(" AND "), *terms.map { |t| "%#{t}%" })
+  end
 
   private
 
