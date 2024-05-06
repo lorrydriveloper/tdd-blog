@@ -7,6 +7,19 @@ RSpec.describe Page, type: :model do
     expect(subject).to be_valid
   end
 
+  describe "scopes" do
+    let(:page1) { create(:page, :published) }
+    let(:page2) { create(:page) }
+
+    before do
+      [page1, page2]
+    end
+
+    it "returns only published pages" do
+      expect(Page.published).to eq([page1])
+    end
+  end
+
   describe "validations" do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to validate_presence_of(:title) }

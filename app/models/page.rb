@@ -6,6 +6,8 @@ class Page < ApplicationRecord
   validates :content, presence: true
   validates :slug, uniqueness: true, presence: true
 
+  scope :published, -> { where(published: true) }
+
   private
 
   def generate_slug

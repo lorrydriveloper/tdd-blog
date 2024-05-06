@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Check if --show is present in arguments
+args=()
+for arg in "$@"; do
+  if [[ $arg == "--show" ]]; then
+    export SHOW_BROWSER=1
+  else
+    args+=("$arg")
+  fi
+done
+
+
+# Run the test suite with the remaining arguments
+bundle exec rspec "${args[@]}"
