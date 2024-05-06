@@ -7,6 +7,7 @@ class Page < ApplicationRecord
   validates :slug, uniqueness: true, presence: true
 
   scope :published, -> { where(published: true) }
+  scope :ordered, -> { order(created_at: :desc) }
 
   private
 

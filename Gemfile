@@ -66,6 +66,7 @@ group :development do
   gem "web-console"
   gem "ruby-lsp"
   gem "ruby-lsp-rails"
+  gem "erb-formatter", "~> 0.7.2"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
