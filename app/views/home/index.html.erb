@@ -1,7 +1,5 @@
 <h1>Home#index</h1>
 
 <% @pages.each do |page| %>
-  <article>
-    <h2><%= page.title %></h2>
-  </article>
+  <%= render partial: "shared/page", locals: { page: page, content: page.summary } %>
 <% end %>
